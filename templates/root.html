@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>OAuth demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', path='/app.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"
+        integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+
+    <div class="container my-5">
+        <h1>TMS OAuth Demo</h1>
+        <div">
+            <p>Minimal FastAPI App implementing a Tapis OAuth flow for {{ tenant_id }}</p>
+
+            <hr class="col-1 my-4">
+            {% if authenticated %}
+            <p>You are authenticated!</p>
+
+            <div hx-get="/whoami" hx-trigger="load"></div>
+            <a href="/logout" class="btn btn-danger" style="width:200px">Log out</a>
+            <hr class="col-1 my-4">
+            <h2>Systems:</h2>
+            <div hx-get="/systems" hx-trigger="load"></div>
+
+            {% else %}
+            <a href="/login" class="btn btn-primary">Login with Tapis</a>
+            {% endif %}
+    </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

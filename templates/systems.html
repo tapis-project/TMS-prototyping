@@ -1,0 +1,38 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Host</th>
+            <th>Owner</th>
+            <th>Effective User</th>
+            <th>Auth Method</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for system in systems %}
+        <tr>
+            <td>
+                <a hx-get="/files/{{ system.id }}" hx-target="#offcanvasBottom" hx-trigger="click"
+                    data-bs-toggle="offcanvas" href="#offcanvasBottom" role="button" aria-controls="offcanvasBottom">
+                    {{ system.id }}
+                </a>
+            </td>
+            </div>
+            <td>{{ system.host }}</td>
+            <td>{{ system.owner }}</td>
+            <td>{{ system.effectiveUserId }}</td>
+            <td>{{ system.defaultAuthnMethod }}</td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel"
+    style="height:70vh">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasBottomLabel">Loading...</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+</div>
