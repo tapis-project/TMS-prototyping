@@ -3,153 +3,155 @@
   "metadata": {
     "count": 4
   },
-  "resourceProviders": [
-    {
-      "id": "rp_tacc",
-      "name": "Texas Advanced Computing Center (TACC)",
-      "institution": "University of Texas at Austin",
-      "description": "TACC provides large-scale computing resources for open science research.",
-      "status": "available",
-      "location": "Austin, TX, USA",
-      "systems": [
-        {
-          "id": "frontera",
-          "name": "Frontera",
-          "status": "available",
-          "description": "Deployed in June 2019, Frontera is the fastest supercomputer on a university campus in the U.S."
-        },
-        {
-          "id": "stampede3",
-          "name": "Stampede3",
-          "status": "available",
-          "description": "Stampede3 is the newest strategic resource for the nation's open science community since entering full production in 2024."
-        },
-        {
-          "id": "lonestar6",
-          "name": "Lonestar6",
-          "status": "available",
-          "description": "Supporting Texas researchers with a balanced set of resources to support simulation, data analysis, visualization, and machine learning."
-        }
-      ],
-      "configFields": [
-        {
-          "key": "allocation_id",
-          "label": "Allocation ID",
-          "type": "dynamic_select",
-          "required": true,
-          "optionsEndpoint": "https://tacc.api/allocations"
-        },
-        {
-          "key": "target_system",
-          "label": "Target System",
-          "type": "dynamic_select",
-          "required": true,
-          "optionsEndpoint": "https://tacc.api/systems"
-        }
-      ]
-    },
-    {
-      "id": "rp_sdsc",
-      "name": "San Diego Supercomputer Center (SDSC)",
-      "institution": "UC San Diego",
-      "description": "SDSC operates HPC systems designed for science gateways.",
-      "status": "available",
-      "location": "San Diego, CA, USA",
-      "systems": [
-        {
-          "id": "expanse",
-          "name": "Expanse",
-          "status": "available",
-          "description": "Expanse supports SDSC's vision of “Computing without Boundaries” by increasing the capacity and performance for thousands of users of batch-oriented and science gateway computing."
-        },
-        {
-          "id": "voyager",
-          "name": "Voyager",
-          "status": "available",
-          "description": "Voyager is an innovative AI system designed specifically for science and engineering research at scale."
-        }
-      ],
-      "configFields": [
-        {
-          "key": "allocation_id",
-          "label": "Allocation ID",
-          "type": "dynamic_select",
-          "required": true,
-          "optionsEndpoint": "https://sdsc.api/allocations"
-        },
-        {
-          "key": "default_partition",
-          "label": "Default Partition",
-          "type": "dynamic_select",
-          "required": false,
-          "optionsEndpoint": "https://sdsc.api/partitions"
-        }
-      ]
-    },
-    {
-      "id": "rp_jetstream2",
-      "name": "Jetstream2",
-      "institution": "Indiana University",
-      "description": "Jetstream2 makes cutting-edge high-performance computing and software easy to use for research regardless of your project's scale.",
-      "status": "available",
-      "location": "Bloomington, IN, USA",
-      "systems": [
-        {
-          "id": "js2_main",
-          "name": "Jetstream2 Main",
-          "status": "available",
-          "description": "Jetstream2 is a flexible, user-friendly cloud computing environment available to US-based researchers and educators at no cost."
-        }
-      ],
-      "configFields": [
-        {
-          "key": "allocation_id",
-          "label": "Allocation ID",
-          "type": "dynamic_select",
-          "required": true,
-          "optionsEndpoint": "https://jetstream2.api/allocations"
-        }
-      ]
-    },
-    {
-      "id": "rp_osc",
-      "name": "Ohio Supercomputer Center (OSC)",
-      "institution": "Ohio State University",
-      "description": "OSC provides high-end HPC resources.",
-      "status": "available",
-      "location": "Columbus, OH, USA",
-      "systems": [
-        {
-          "id": "owens",
-          "name": "Owens",
-          "status": "disabled",
-          "description": "Dell-built, Intel® Xeon® processor-based supercomputer."
-        },
-        {
-          "id": "pitzer",
-          "name": "Pitzer",
-          "status": "available",
-          "description": "A 10,560-core Dell Intel Gold 6148 + 19,104-core Dual Intel Xeon 8268 machine."
-        }
-      ],
-      "configFields": [
-        {
-          "key": "allocation_id",
-          "label": "Allocation ID",
-          "type": "dynamic_select",
-          "required": true,
-          "optionsEndpoint": "https://osc.api/allocations"
-        },
-        {
-          "key": "target_system",
-          "label": "Target System",
-          "type": "dynamic_select",
-          "required": true,
-          "optionsEndpoint": "https://osc.api/systems"
-        }
-      ]
-    }
-  ],
+  "result": {
+    "resourceProviders": [
+      {
+        "id": "rp_tacc",
+        "name": "Texas Advanced Computing Center (TACC)",
+        "institution": "University of Texas at Austin",
+        "description": "TACC provides large-scale computing resources for open science research.",
+        "status": "available",
+        "location": "Austin, TX, USA",
+        "systems": [
+          {
+            "id": "frontera",
+            "name": "Frontera",
+            "status": "available",
+            "description": "Deployed in June 2019, Frontera is the fastest supercomputer on a university campus in the U.S."
+          },
+          {
+            "id": "stampede3",
+            "name": "Stampede3",
+            "status": "available",
+            "description": "Stampede3 is the newest strategic resource for the nation's open science community since entering full production in 2024."
+          },
+          {
+            "id": "lonestar6",
+            "name": "Lonestar6",
+            "status": "available",
+            "description": "Supporting Texas researchers with a balanced set of resources to support simulation, data analysis, visualization, and machine learning."
+          }
+        ],
+        "configFields": [
+          {
+            "key": "allocation_id",
+            "label": "Allocation ID",
+            "type": "dynamic_select",
+            "required": true,
+            "optionsEndpoint": "https://tacc.api/allocations"
+          },
+          {
+            "key": "target_system",
+            "label": "Target System",
+            "type": "dynamic_select",
+            "required": true,
+            "optionsEndpoint": "https://tacc.api/systems"
+          }
+        ]
+      },
+      {
+        "id": "rp_sdsc",
+        "name": "San Diego Supercomputer Center (SDSC)",
+        "institution": "UC San Diego",
+        "description": "SDSC operates HPC systems designed for science gateways.",
+        "status": "available",
+        "location": "San Diego, CA, USA",
+        "systems": [
+          {
+            "id": "expanse",
+            "name": "Expanse",
+            "status": "available",
+            "description": "Expanse supports SDSC's vision of “Computing without Boundaries” by increasing the capacity and performance for thousands of users of batch-oriented and science gateway computing."
+          },
+          {
+            "id": "voyager",
+            "name": "Voyager",
+            "status": "available",
+            "description": "Voyager is an innovative AI system designed specifically for science and engineering research at scale."
+          }
+        ],
+        "configFields": [
+          {
+            "key": "allocation_id",
+            "label": "Allocation ID",
+            "type": "dynamic_select",
+            "required": true,
+            "optionsEndpoint": "https://sdsc.api/allocations"
+          },
+          {
+            "key": "default_partition",
+            "label": "Default Partition",
+            "type": "dynamic_select",
+            "required": false,
+            "optionsEndpoint": "https://sdsc.api/partitions"
+          }
+        ]
+      },
+      {
+        "id": "rp_jetstream2",
+        "name": "Jetstream2",
+        "institution": "Indiana University",
+        "description": "Jetstream2 makes cutting-edge high-performance computing and software easy to use for research regardless of your project's scale.",
+        "status": "available",
+        "location": "Bloomington, IN, USA",
+        "systems": [
+          {
+            "id": "js2_main",
+            "name": "Jetstream2 Main",
+            "status": "available",
+            "description": "Jetstream2 is a flexible, user-friendly cloud computing environment available to US-based researchers and educators at no cost."
+          }
+        ],
+        "configFields": [
+          {
+            "key": "allocation_id",
+            "label": "Allocation ID",
+            "type": "dynamic_select",
+            "required": true,
+            "optionsEndpoint": "https://jetstream2.api/allocations"
+          }
+        ]
+      },
+      {
+        "id": "rp_osc",
+        "name": "Ohio Supercomputer Center (OSC)",
+        "institution": "Ohio State University",
+        "description": "OSC provides high-end HPC resources.",
+        "status": "available",
+        "location": "Columbus, OH, USA",
+        "systems": [
+          {
+            "id": "owens",
+            "name": "Owens",
+            "status": "disabled",
+            "description": "Dell-built, Intel® Xeon® processor-based supercomputer."
+          },
+          {
+            "id": "pitzer",
+            "name": "Pitzer",
+            "status": "available",
+            "description": "A 10,560-core Dell Intel Gold 6148 + 19,104-core Dual Intel Xeon 8268 machine."
+          }
+        ],
+        "configFields": [
+          {
+            "key": "allocation_id",
+            "label": "Allocation ID",
+            "type": "dynamic_select",
+            "required": true,
+            "optionsEndpoint": "https://osc.api/allocations"
+          },
+          {
+            "key": "target_system",
+            "label": "Target System",
+            "type": "dynamic_select",
+            "required": true,
+            "optionsEndpoint": "https://osc.api/systems"
+          }
+        ]
+      }
+    ]
+  },
   "status": "success",
   "version": "dev"
 }
