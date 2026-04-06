@@ -1,0 +1,45 @@
+{% for rp in resourceProviders %}
+<div>
+  <div style="border-bottom: 4px solid; padding-bottom: 8px;">
+
+    <h3>{{ rp.name }}</h3>
+
+    <p>{{ rp.institution }} &mdash; {{ rp.location }}</p>
+
+    <p>{{ rp.description }}</p>
+
+    {% set rp_color = "green" if "available" in rp.status else "red" %}
+    <p style="color: {{ rp_color }}">{{ rp.status }}</p>
+
+    <div>
+      <p style="font-weight: bold;">Systems</p>
+    
+      <div>
+        {% for system in rp.systems %}
+        {% set sys_color = "green" if "online" in system.status else "red" %}
+        <button 
+          style="
+            padding: 8px 12px;
+            border: 2px solid {{ sys_color }};
+            color: {{ sys_color }};
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+          "
+          onmouseover="this.style.backgroundColor='{{ sys_color }}'; this.style.color='white';"
+          onmouseout="this.style.backgroundColor='white'; this.style.color='{{ sys_color }}';"
+        >
+          {{ system.name }}
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% else %}
+<div>
+  <p>No resource providers available.</p>
+</div>
+{% endfor %}

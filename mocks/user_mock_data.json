@@ -1,0 +1,45 @@
+{
+    "message": "Resource Providers retrieved successfully",
+    "metadata": {},
+    "result": {
+        "users": {
+            "gcurbelo": {
+                "resourceProviders": [
+                    "rp_tacc",
+                    "rp_sdsc",
+                    "rp_osc"
+                ],
+                "systems": {
+                    "rp_tacc": [
+                        "frontera",
+                        "stampede3"
+                    ],
+                    "rp_sdsc": [
+                        "expanse",
+                        "voyager"
+                    ],
+                    "rp_osc": [
+                        "owens"
+                    ]
+                }
+            },
+            "jrosenberg": {
+                "resourceProviders": [
+                    "rp_tacc",
+                    "rp_jetstream2"
+                ],
+                "systems": {
+                    "rp_tacc": [
+                        "frontera",
+                        "lonestar6"
+                    ],
+                    "rp_jetstream2": [
+                        "js2_main"
+                    ]
+                }
+            }
+        }
+    },
+    "status": "success",
+    "version": "dev"
+}

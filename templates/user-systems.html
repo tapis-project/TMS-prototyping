@@ -1,0 +1,21 @@
+{% for sys in systems %}
+<div>
+  <div style="border-bottom: 4px solid; padding-bottom: 8px;">
+
+    <h3>{{ sys.name }}</h3>
+
+    <p>RP: {{ sys.rp }}</p>
+
+    <p>Description: {{ sys.description }}</p>
+
+    {% set sys_color = "green" if "online" in sys.status else "red" %}
+    <p style="color: {{ sys_color }}">{{ sys.status }}</p>
+
+  </div>
+</div>
+
+{% else %}
+<div>
+  <p>No systems available.</p>
+</div>
+{% endfor %}

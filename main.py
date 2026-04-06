@@ -11,6 +11,8 @@ from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import settings
+import json
+from utils import build_user_systems_response, build_user_resource_providers_response, build_user_data_response
 
 logger = logging.getLogger("uvicorn.info")
 app = FastAPI()
@@ -38,15 +40,54 @@ class TokenResult(pydantic.BaseModel):
     refresh_token: RefreshToken
 
 
+class System(pydantic.BaseModel):
+    id: str
+    name: str
+    status: str
+    description: str
+
+
+class ConfigField(pydantic.BaseModel):
+    key: str
+    label: str
+    type: str
+    required: bool
+    optionsEndpoint: str
+
+
+class ResourceProvider(pydantic.BaseModel):
+    id: str
+    name: str
+    institution: str
+    description: str
+    status: str
+    location: str
+    systems: list[System]
+    configFields: list[ConfigField]
+
+
+class ResourceProvidersResult(pydantic.BaseModel):
+    resourceProviders: list[ResourceProvider]
+
+
 @app.get("/")
 async def root(request: Request) -> HTMLResponse:
     authenticated = request.cookies.get("tapistoken") is not None
+    if settings.DEV_ENV:
+        user = settings.MOCK_USER
+    else:
+        user = httpx.get(
+            f"{settings.TAPIS_TENANT_URL}/v3/oauth2/userinfo",
+            headers={"x-tapis-token": request.cookies.get("tapistoken")},
+        ).json()["result"]["username"]
+
     return templates.TemplateResponse(
         request=request,
         name="root.html",
         context={
             "tenant_id": settings.TAPIS_TENANT_URL,
             "authenticated": authenticated,
+            "user": user
         },
     )
 
@@ -185,4 +226,121 @@ async def get_files(
         request=request,
         name="file-listing-offcanvas.html",
         context={"files": file_info.json()["result"], "system": system},
+    )
+
+
+@app.get("/resourceproviders")
+async def get_resource_providers(
+    request: Request,
+    tapis_token: str = Depends(APIKeyCookie(name="tapistoken"))
+) -> HTMLResponse:
+    if settings.DEV_ENV:
+        response = []
+
+        with open('mocks/rp_mock_data.json', 'r') as f:
+            data = json.load(f)
+            response = data["result"]["resourceProviders"]
+
+        logger.info(response)
+
+        return templates.TemplateResponse(
+            request=request,
+            name="resource-providers.html",
+            context={"resourceProviders": response}
+        )
+
+    return templates.TemplateResponse(
+        request=request,
+        name="resource-providers.html",
+        context={"resourceProviders": []}
+    )
+
+
+@app.get("/systems/{user}")
+async def get_user_systems(
+    user: str,
+    request: Request,
+    tapis_token: str = Depends(APIKeyCookie(name="tapistoken"))
+) -> HTMLResponse:
+    if settings.DEV_ENV:
+        with open('mocks/user_mock_data.json', 'r') as f:
+            user_data = json.load(f)["result"]["users"][user]["systems"]
+
+        with open('mocks/rp_mock_data.json', 'r') as f:
+            all_data = json.load(f)["result"]
+
+        user_systems = build_user_systems_response(user_data, all_data)
+
+        return templates.TemplateResponse(
+            request=request,
+            name="user-systems.html",
+            context={"systems": user_systems}
+        )
+
+    return templates.TemplateResponse(
+        request=request,
+        name="user-systems.html",
+        context={"systems": []}
+    )
+
+
+@app.get("/resourceproviders/{user}")
+async def get_user_resource_providers(
+    user: str,
+    request: Request,
+    tapis_token: str = Depends(APIKeyCookie(name="tapistoken"))
+) -> HTMLResponse:
+    if settings.DEV_ENV:
+        with open('mocks/user_mock_data.json', 'r') as f:
+            user_data = json.load(f)["result"]["users"][user]["resourceProviders"]
+
+        with open('mocks/rp_mock_data.json', 'r') as f:
+            all_data = json.load(f)["result"]
+
+        user_resource_providers = build_user_resource_providers_response(user_data, all_data)
+
+        return templates.TemplateResponse(
+            request=request,
+            name="user-resource-providers.html",
+            context={"resourceProviders": user_resource_providers}
+        )
+
+    return templates.TemplateResponse(
+        request=request,
+        name="user-resource-providers.html",
+        context={"resourceProviders": []}
+    )
+
+
+@app.get("/info/{user}")
+async def get_user_data(
+    user: str,
+    request: Request,
+    tapis_token: str = Depends(APIKeyCookie(name="tapistoken"))
+) -> HTMLResponse:
+    if settings.DEV_ENV:
+        with open('mocks/user_mock_data.json', 'r') as f:
+            user_data = json.load(f)["result"]["users"][user]
+
+        with open('mocks/rp_mock_data.json', 'r') as f:
+            all_data = json.load(f)["result"]
+
+        user_data = build_user_data_response(user_data, all_data)
+
+        return templates.TemplateResponse(
+            request=request,
+            name="user-data.html",
+            context={
+                "resourceProviders": user_data["resourceProviders"],
+                "systems": user_data["systems"]
+            }
+        )
+
+    return templates.TemplateResponse(
+        request=request,
+        name="user-data.html",
+        context={
+            "resourceProviders": [],
+            "systems": []
+        }
     )
