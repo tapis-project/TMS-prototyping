@@ -1,26 +1,28 @@
 <div class="offcanvas-header">
     <h5 class="offcanvas-title" id="offcanvasBottomLabel">{{ system }}</h5>
+    <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+    ></button>
 </div>
-<div class="offcanvas-body">
+<div class="files-listing-spinner htmx-indicator">listing spinner...</div>
+<div class="offcanvas-body files-listing-spinner hide-while-loading">
     <table class="table">
         <thead>
             <tr>
                 <th>Path</th>
                 <th>Last Modified</th>
-
             </tr>
         </thead>
         <tbody>
-            {% if files%}
-            {% for file in files %}
+            {% if files%} {% for file in files %}
             <tr>
-
                 <td>{{ file.path }}</td>
                 <td>{{ file.lastModified }}</td>
-
             </tr>
-            {% endfor %}
-            {% else %}
+            {% endfor %} {% else %}
             <tr>
                 <td colspan="2">(No files to list.)</td>
             </tr>

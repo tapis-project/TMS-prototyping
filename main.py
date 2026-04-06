@@ -1,15 +1,17 @@
+import asyncio
+import logging
 import secrets
 from datetime import datetime
 from typing import Optional
-import asyncio
-import logging
+
 import httpx
 import pydantic
-from fastapi import FastAPI, Request, HTTPException, Cookie, Depends
+from fastapi import Cookie, Depends, FastAPI, HTTPException, Request, status
+from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.security import APIKeyCookie
-from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+
 import settings
 
 logger = logging.getLogger("uvicorn.info")
@@ -36,6 +38,15 @@ class RefreshToken(pydantic.BaseModel):
 class TokenResult(pydantic.BaseModel):
     access_token: AccessToken
     refresh_token: RefreshToken
+
+
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    response = await call_next(request)
+    # Define your CSP policy here
+    csp_policy = "default-src 'self' https://cdn.jsdelivr.net data: 'unsafe-inline'; script-src 'self' https://cdn.jsdelivr.net; object-src 'none'; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'"
+    response.headers["Content-Security-Policy"] = csp_policy
+    return response
 
 
 @app.get("/")
@@ -75,7 +86,7 @@ async def oauth_callback(
 ) -> RedirectResponse:
     # Check that the state returned from OAuth is the same secret we set at the start
     if not state == initial_state:
-        raise HTTPException("state mismatch")
+        raise HTTPException(status.HTTP_403_FORBIDDEN, detail="state mismatch")
 
     # Exchange the authorization code for a Tapis JWT
     token_claim_response = httpx.post(
@@ -173,7 +184,7 @@ async def get_systems(
 
 @app.get("/files/{system}")
 async def get_files(
-    system,
+    system: str,
     request: Request,
     tapis_token: str = Depends(APIKeyCookie(name="tapistoken")),
 ) -> HTMLResponse:

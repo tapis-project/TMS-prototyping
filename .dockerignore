@@ -1,0 +1,6 @@
+dev.env
+prod.env
+deploy.env
+*.env
+.venv
+.vscode
