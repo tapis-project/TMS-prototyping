@@ -12,10 +12,13 @@ from fastapi.security import APIKeyCookie
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+import json_endpoints
+
 import settings
 
 logger = logging.getLogger("uvicorn.info")
 app = FastAPI()
+app.include_router(json_endpoints.router)
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -38,15 +41,6 @@ class RefreshToken(pydantic.BaseModel):
 class TokenResult(pydantic.BaseModel):
     access_token: AccessToken
     refresh_token: RefreshToken
-
-
-@app.middleware("http")
-async def add_security_headers(request: Request, call_next):
-    response = await call_next(request)
-    # Define your CSP policy here
-    csp_policy = "default-src 'self' https://cdn.jsdelivr.net data: 'unsafe-inline'; script-src 'self' https://cdn.jsdelivr.net; object-src 'none'; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'"
-    response.headers["Content-Security-Policy"] = csp_policy
-    return response
 
 
 @app.get("/")
