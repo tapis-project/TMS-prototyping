@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>OAuth demo</title>
+    <title>SGW TMS OAuth Demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ url_for('static', path='/app.css') }}">
@@ -15,16 +15,33 @@
 
 <body>
 
+    <div class="logo-bar">
+        <div class="logo">
+        <div class="logo-mark">SGW</div>
+        <div class="logo-text">Science Gateway</div>
+        </div>
+    </div>
 
-    <h1>Globus OAuth Portal</h1>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a class="nav-btn" href="/">Home</a>
+            <a class="nav-btn" href="/">Data</a>
+            <a class="nav-btn" href="/">Applications</a>
+            <a class="nav-btn" href="/">Systems</a>
+        </div>
+        <a class="login-btn" href="/login">Log in</a>
+    </nav>
+
+    <div class="main">
+    <h1>Globus OAuth and TMS Credential Linking Demo</h1>
     {% if authenticated %}
     <div>
         <p>
             Logged in as: {{ user_info['name'] }} ({{user_info['identity_provider_display_name']}},
             {{user_info['preferred_username']}})
         </p>
-        <p>
-            <a
+        <p class="tms-link">
+            <a class="tms-btn"
                 href="https://tms-auth-service.tacc.cloud/login?idp_id=globus_idp&redirect_uri=https://tms-auth-service.tacc.cloud/">Link
                 Resources via TMS</a>
         </p>
@@ -32,9 +49,10 @@
     {% else %}
     <div>
         <p>You are not authenticated.</p>
-        <p><a href="/login">Log In</a></p>
+        <p>Please Log In</p>
     </div>
     {% endif %}
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
