@@ -14,4 +14,4 @@ This is a mimimal demonstration of how to consume the OAuth2 Authorization Code 
 
 4. `uv run --env-file=dev.env fastapi dev main_globus.py`
 
-5. Visit the running demo at http://127.0.0.1:8000/
+5. Visit the running demo at http://localhost:8000/
