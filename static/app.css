@@ -10,9 +10,9 @@
   --border: #3a4150;
   --hover: #222733;
   --active: #344366;
-  --login: #3f68e0;
-  --loginhvr: #da6415;
-  --loginact: #db8a53;
+  --auth: #3f68e0;
+  --authhvr: #da6415;
+  --authact: #db8a53;
   --accent: #4f7cff;
   --accent1: #030030;
   --accent2: #da6415;
@@ -114,9 +114,9 @@ body {
   background: var(--active);
 }
 
-.login-btn {
+.auth-btn {
   display: inline-block;
-  background: var(--login);
+  background: var(--auth);
   color: var(--bg);
   border: none;
   border-radius: 6px;
@@ -129,12 +129,12 @@ body {
   transition: background 0.15s ease;
 }
 
-.login-btn:hover { 
-  background: var(--loginhvr); 
+.auth-btn:hover { 
+  background: var(--authhvr); 
 }
 
-.login-btn:active { 
-  background: var(--loginact); 
+.auth-btn:active { 
+  background: var(--authact); 
 }
 
 .tms-link {
@@ -142,7 +142,7 @@ body {
 }
 
 .tms-btn {
-  background: var(--login);
+  background: var(--auth);
   color: var(--bg);
   border: 1px solid var(--border);
   border-radius: 6px;
@@ -155,11 +155,11 @@ body {
 }
 
 .tms-btn:hover {
-  background: var(--loginhvr);
+  background: var(--authhvr);
 }
 
 .tms-btn:active {
-  background: var(--loginact);
+  background: var(--authact);
 }
 
 .main {
