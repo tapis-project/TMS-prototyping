@@ -13,6 +13,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 import json_endpoints
+from urllib.parse import urlencode
 
 import settings
 
@@ -68,11 +69,18 @@ async def root(request: Request) -> HTMLResponse:
 @app.get("/login")
 async def login() -> RedirectResponse:
     AUTH_STATE = secrets.token_hex(24)
+    # OAUTH_REDIRECT_URL = (
+    #     f"{settings.GLOBUS_OAUTH_URL}/v2/oauth2/authorize"
+    #     f"?client_id=fb313bae-4dd0-4a5d-a43e-a9b89a0917ec"
+    #     "&redirect_uri=http://localhost:8000/oauth-callback"
+    #     "&scope=openid email profile"
+    #     f"&response_type=code&state={AUTH_STATE}"
+    # )
     OAUTH_REDIRECT_URL = (
         f"{settings.GLOBUS_OAUTH_URL}/v2/oauth2/authorize"
         f"?client_id=fb313bae-4dd0-4a5d-a43e-a9b89a0917ec"
         "&redirect_uri=http://localhost:8000/oauth-callback"
-        "&scope=openid email profile"
+        "&scope=openid email profile offline_access"
         f"&response_type=code&state={AUTH_STATE}"
     )
     redirect_response = RedirectResponse(OAUTH_REDIRECT_URL)
@@ -137,12 +145,12 @@ async def oauth_proxy(
     return {"code": input.code + "OK2"}
 
 
-async def revoke_token(client: httpx.AsyncClient, token: str) -> None:
-    resp = await client.post(
-        f"{settings.TAPIS_TENANT_URL}/v3/tokens/revoke", json={"token": token}
-    )
-    resp.raise_for_status()
-    logger.info(resp.json())
+# async def revoke_token(client: httpx.AsyncClient, token: str) -> None:
+#     resp = await client.post(
+#         f"{settings.TAPIS_TENANT_URL}/v3/tokens/revoke", json={"token": token}
+#     )
+#     resp.raise_for_status()
+#     logger.info(resp.json())
 
 
 async def revoke_tokens(tokens: list[str]) -> None:
@@ -152,17 +160,52 @@ async def revoke_tokens(tokens: list[str]) -> None:
                 tg.create_task(revoke_token(client, token))
 
 
+# @app.get("/logout")
+# async def logout(
+#     tapis_token=Depends(APIKeyCookie(name="tapistoken")),
+#     refresh_token=Depends(APIKeyCookie(name="refreshtoken")),
+# ) -> RedirectResponse:
+#     """
+#     Revoke tokens and log the user out.
+#     """
+#     await revoke_tokens([tapis_token, refresh_token])
+
+#     redirect_response = RedirectResponse("/")
+#     redirect_response.delete_cookie("tapistoken")
+#     redirect_response.delete_cookie("refreshtoken")
+#     return redirect_response
+
+
+async def revoke_token(client: httpx.AsyncClient, token: str) -> None:
+    resp = await client.post(
+        f"{settings.GLOBUS_OAUTH_URL}/v2/oauth2/token/revoke",
+        data={"token": token},   # form-encoded, not json=
+        auth=(settings.GLOBUS_OAUTH_CLIENT_ID, settings.GLOBUS_OAUTH_CLIENT_SECRET),
+    )
+    resp.raise_for_status()
+    logger.info(resp.json())
+
+
+GLOBUS_LOGOUT_URL = f"{settings.GLOBUS_OAUTH_URL}/v2/web/logout?" + urlencode({
+    "client_id": settings.GLOBUS_OAUTH_CLIENT_ID,
+    "redirect_uri": "http://localhost:8000/",
+    "redirect_name": "My App",
+})
+
+
 @app.get("/logout")
 async def logout(
-    tapis_token=Depends(APIKeyCookie(name="tapistoken")),
-    refresh_token=Depends(APIKeyCookie(name="refreshtoken")),
+    globus_token: Optional[str] = Cookie(default=None, alias="globustoken"),
+    refresh_token: Optional[str] = Cookie(default=None, alias="refreshtoken"),
 ) -> RedirectResponse:
-    """
-    Revoke tokens and log the user out.
-    """
-    await revoke_tokens([tapis_token, refresh_token])
+    """Revoke tokens and log the user out."""
+    try:
+        await revoke_tokens([globus_token, refresh_token])
+    except Exception:
+        logger.exception("token revocation failed; clearing cookies anyway")
 
-    redirect_response = RedirectResponse("/")
-    redirect_response.delete_cookie("tapistoken")
-    redirect_response.delete_cookie("refreshtoken")
-    return redirect_response
+    # resp = RedirectResponse("/", status_code=status.HTTP_303_SEE_OTHER)
+    resp = RedirectResponse(GLOBUS_LOGOUT_URL, status_code=status.HTTP_303_SEE_OTHER)
+    resp.delete_cookie("globustoken", samesite="lax", path="/")
+    resp.delete_cookie("refreshtoken", samesite="lax", path="/")
+    return resp
