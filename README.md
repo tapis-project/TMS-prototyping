@@ -6,6 +6,8 @@ This is a mimimal demonstration of how to consume the OAuth2 Authorization Code 
 
 ## Running the Demo
 
+Note the use of `localhost` for the Globus implementation demo and `127.0.0.1` for the Tapis implementation demo.
+
 ### Using uv
 
 1. Install the [uv package manager](https://docs.astral.sh/uv/guides/install-python/) on your system if it isn't installed yet.
@@ -35,6 +37,6 @@ This is a mimimal demonstration of how to consume the OAuth2 Authorization Code 
 
 **-- Tapis OAuth**
 
-1. In the root of the repo run the command: `docker build -f Dockerfile -t tms:sgw-tapis .`
+1. In the root of the repo run the command: `docker build -f Dockerfile.tapis -t tms:sgw-tapis .`
 2. After the image build completes, run the command: `docker run --rm -it -p 8000:8000  -v ./dev.env:/mnt/data/.env:ro tms:sgw-tapis`
 3. Visit the running demo at http://127.0.0.1:8000/
