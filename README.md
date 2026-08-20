@@ -14,12 +14,12 @@ Note the use of `localhost` for the Globus implementation demo and `127.0.0.1` f
 2. Clone the repo and copy `dev.env.sample` to the path `dev.env`, replacing the client key/secret with appropriate values.
 3. `uv sync`
 
-**-- Globus OAuth**
+**-- Globus Auth**
 
 1. `uv run --env-file=dev.env fastapi dev main_globus.py`
 2. Visit the running demo at http://localhost:8000/
 
-**-- Tapis OAuth**
+**-- Tapis Auth**
 
 1. `uv run --env-file=dev.env fastapi dev main.py`
 2. Visit the running demo at http://127.0.0.1:8000/
@@ -29,13 +29,13 @@ Note the use of `localhost` for the Globus implementation demo and `127.0.0.1` f
 1. Install [docker](https://docs.docker.com/get-started/get-docker/) on your system if it isn't installed yet.
 2. Clone the repo and copy `dev.env.sample` to the path `dev.env`, replacing the client key/secret with appropriate values.
 
-**-- Globus OAuth**
+**-- Globus Auth**
 
 1. In the root of the repo run the command: `docker build -f Dockerfile.globus -t tms:sgw-globus .`
 2. After the image build completes, run the command: `docker run --rm -it -p 8000:8000  -v ./dev.env:/mnt/data/.env:ro tms:sgw-globus`
 3. Visit the running demo at http://localhost:8000/
 
-**-- Tapis OAuth**
+**-- Tapis Auth**
 
 1. In the root of the repo run the command: `docker build -f Dockerfile.tapis -t tms:sgw-tapis .`
 2. After the image build completes, run the command: `docker run --rm -it -p 8000:8000  -v ./dev.env:/mnt/data/.env:ro tms:sgw-tapis`
