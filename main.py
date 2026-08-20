@@ -48,7 +48,7 @@ async def root(request: Request) -> HTMLResponse:
     authenticated = request.cookies.get("tapistoken") is not None
     return templates.TemplateResponse(
         request=request,
-        name="root.old.html",
+        name="root.tapis.html",
         context={
             "tenant_id": settings.TAPIS_TENANT_URL,
             "authenticated": authenticated,
