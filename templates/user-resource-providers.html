@@ -1,0 +1,21 @@
+{% for rp in resourceProviders %}
+<div>
+  <div style="border-bottom: 4px solid; padding-bottom: 8px;">
+
+    <h3>{{ rp.name }}</h3>
+
+    <p>{{ rp.institution }} &mdash; {{ rp.location }}</p>
+
+    <p>{{ rp.description }}</p>
+
+    {% set rp_color = "green" if "available" in rp.status else "red" %}
+    <p style="color: {{ rp_color }}">{{ rp.status }}</p>
+
+  </div>
+</div>
+
+{% else %}
+<div>
+  <p>No resource providers available.</p>
+</div>
+{% endfor %}
