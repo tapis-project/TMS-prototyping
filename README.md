@@ -17,10 +17,10 @@ This is a mimimal demonstration of how to consume the OAuth2 Authorization Code 
 1. `uv run --env-file=dev.env fastapi dev main_globus.py`
 2. Visit the running demo at http://localhost:8000/
 
-<!-- **-- Tapis OAuth**
+**-- Tapis OAuth**
 
 1. `uv run --env-file=dev.env fastapi dev main.py`
-2. Visit the running demo at http://localhost:8000/ -->
+2. Visit the running demo at http://localhost:8000/
 
 ### Using Docker
 
@@ -33,9 +33,8 @@ This is a mimimal demonstration of how to consume the OAuth2 Authorization Code 
 2. After the image build completes, run the command: `docker run --rm -it -p 8000:8000  -v ./dev.env:/mnt/data/.env:ro tms:sgw-globus`
 3. Visit the running demo at http://localhost:8000/
 
-<!-- **-- Tapis OAuth**
+**-- Tapis OAuth**
 
 1. In the root of the repo run the command: `docker build -f Dockerfile -t tms:sgw .`
 2. After the image build completes, run the command: `docker run --rm -it -p 8000:8000  -v ./dev.env:/mnt/data/.env:ro tms:sgw`
-3. Visit the running demo at http://localhost:8000/ -->
-
+3. Visit the running demo at http://localhost:8000/
