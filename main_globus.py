@@ -57,7 +57,7 @@ async def root(request: Request) -> HTMLResponse:
     print(user_info)
     return templates.TemplateResponse(
         request=request,
-        name="root_globus.html",
+        name="root.globus.html",
         context={
             "user_info": user_info,
             "tenant_id": settings.TAPIS_TENANT_URL,

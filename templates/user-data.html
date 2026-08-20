@@ -1,0 +1,53 @@
+<h2>Resource Providers:</h2>
+<div class="list-group shadow-sm">
+    <div class="list-group-item bg-light fw-bold d-flex justify-content-between">
+        <span>Resource Provider</span>
+        <span>Status</span>
+    </div>
+
+    {% for rp in resourceProviders %}
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="mb-0 fs-6">{{ rp.name }}</h5>
+        </div>
+        
+        <span class="badge rounded-pill {% if 'available' in rp.status|lower %}bg-success{% else %}bg-secondary{% endif %}">
+            {{ rp.status }}
+        </span>
+    </div>
+    {% else %}
+    <div>
+        No resource providers found.
+    </div>
+    {% endfor %}
+</div>
+
+<h2 style="padding-top: 16px;">Systems:</h2>
+<div class="list-group shadow-sm">
+    <div class="list-group-item bg-light fw-bold d-flex justify-content-between">
+        <span>Name</span>
+        <span>RP</span>
+        <span>Status</span>
+
+    </div>
+
+    {% for sys in systems %}
+    <div class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <h5 class="mb-0 fs-6">{{ sys.name }}</h5>
+        </div>
+        
+        <div>
+            <h5 class="mb-0 fs-6">{{ sys.rp }}</h5>
+        </div>
+
+        <span class="badge rounded-pill {% if 'online' in sys.status|lower %}bg-success{% else %}bg-secondary{% endif %}">
+            {{ sys.status }}
+        </span>
+    </div>
+    {% else %}
+    <div>
+        No resource providers found.
+    </div>
+    {% endfor %}
+</div>

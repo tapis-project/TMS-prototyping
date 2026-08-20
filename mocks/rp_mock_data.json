@@ -16,19 +16,19 @@
           {
             "id": "frontera",
             "name": "Frontera",
-            "status": "available",
+            "status": "online",
             "description": "Deployed in June 2019, Frontera is the fastest supercomputer on a university campus in the U.S."
           },
           {
             "id": "stampede3",
             "name": "Stampede3",
-            "status": "available",
+            "status": "online",
             "description": "Stampede3 is the newest strategic resource for the nation's open science community since entering full production in 2024."
           },
           {
             "id": "lonestar6",
             "name": "Lonestar6",
-            "status": "available",
+            "status": "online",
             "description": "Supporting Texas researchers with a balanced set of resources to support simulation, data analysis, visualization, and machine learning."
           }
         ],
@@ -60,13 +60,13 @@
           {
             "id": "expanse",
             "name": "Expanse",
-            "status": "available",
+            "status": "online",
             "description": "Expanse supports SDSC's vision of “Computing without Boundaries” by increasing the capacity and performance for thousands of users of batch-oriented and science gateway computing."
           },
           {
             "id": "voyager",
             "name": "Voyager",
-            "status": "available",
+            "status": "online",
             "description": "Voyager is an innovative AI system designed specifically for science and engineering research at scale."
           }
         ],
@@ -98,7 +98,7 @@
           {
             "id": "js2_main",
             "name": "Jetstream2 Main",
-            "status": "available",
+            "status": "online",
             "description": "Jetstream2 is a flexible, user-friendly cloud computing environment available to US-based researchers and educators at no cost."
           }
         ],
@@ -129,7 +129,7 @@
           {
             "id": "pitzer",
             "name": "Pitzer",
-            "status": "available",
+            "status": "online",
             "description": "A 10,560-core Dell Intel Gold 6148 + 19,104-core Dual Intel Xeon 8268 machine."
           }
         ],
